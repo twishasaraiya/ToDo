@@ -1,4 +1,24 @@
 $(document).ready(() => {
+  $('.add').on('click', evt => {
+    var task = $(evt.target)
+      .siblings('input')
+      .val()
+    console.log('New task', task)
+    // add task to database
+    $.ajax({
+      type: 'POST',
+      url: '/todos/done',
+      data: {
+        text: task
+      },
+      success: function (resp) {
+        console.log('Task Completed')
+      },
+      error: function (err) {
+        console.log('Error!')
+      }
+    })
+  })
   $('.checkbox').on('click', evt => {
     var taskId = $(evt.target)
       .parent()
@@ -27,9 +47,9 @@ $(document).ready(() => {
       .attr('id')
     var btnText = $(evt.target).text()
     if (btnText === 'Edit') {
-      var p = $(evt.target).siblings('p')
-      var input = $('<input type="text" value="' + p.text() + '">')
-      p.remove()
+      var span = $(evt.target).siblings('span')
+      var input = $('<input type="text" value="' + span.text() + '">')
+      span.remove()
       $(evt.target).before(input)
       $(evt.target).text('Modify')
     } else {
@@ -46,9 +66,9 @@ $(document).ready(() => {
         },
         success: function (resp) {
           console.log($(input).val())
-          p = $('<p>' + text + '</p>')
+          span = $('<span>' + text + '</span>')
           input.remove()
-          $(evt.target).before(p)
+          $(evt.target).before(span)
           $(evt.target).text('Edit')
         },
         error: function (err) {

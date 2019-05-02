@@ -19,7 +19,10 @@ exports.signup = (req, res) => {
       console.log('NEW USER INSERTED ', result.insertId)
       req.session.userId = result.insertId
       req.session.username = req.body.username
-      res.redirect('/todos')
+      res.send({
+        message: 'Successfully Signed Up',
+        redirect: 'http://localhost:3001/todos'
+      })
     }
   })
 }
@@ -36,7 +39,10 @@ exports.login = (req, res) => {
         console.log('Logged in successfully', result[0])
         req.session.userId = result[0].id
         req.session.username = result[0].username
-        res.redirect('/todos')
+        res.send({
+          message: 'Successfully loggged in',
+          redirect: 'http://localhost:3001/todos'
+        })
       } else {
         throw err
         res.send('Email does not match')

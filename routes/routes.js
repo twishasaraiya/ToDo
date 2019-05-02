@@ -18,19 +18,11 @@ router.get('/', (req, res) => {
 /**
  ** Signup
  **/
-router.get('/signup', (req, res) => {
-  res.render('signup')
-})
-
 router.post('/signup', userController.signup)
 
 /**
  ** Login
  **/
-router.get('/login', (req, res) => {
-  res.render('login')
-})
-
 router.post('/login', userController.login)
 
 /**
