@@ -1,10 +1,22 @@
+body{
+  width: 90%;
+  margin: auto;
+}
 header{
   display: flex;
   flex-direction: row;
 }
+header a{
+  margin-left: auto;
+  width: 25%;
+}
+.logout{
+  width: 100%;
+  height: 40px;
+}
 input[type="text"]{
   border: 2px solid #cacece;
-  width: 70%;
+  width: 80%;
   height: 40px;
   background-color: #fff;
   margin: 1em 0em;
@@ -12,36 +24,47 @@ input[type="text"]{
 input[type="text"]:focus{
   border: 2px solid #1a73e8;
 }
-button{
+.blue{
+  background-color: #263e7b;
+}
+.green{
   background-color: #32af83;
+}
+button{
   color: #fff;
   border: 0px;
   text-transform: uppercase;
   font-size: 15px;
   font-weight: 500;
   border-radius: 2px;
-  margin: 10px;
+  margin: .5em 0em;
   cursor:pointer;
 }
-.logout{
-  width: 100%;
-  height: 40px;
-}
+
 .add{
-  width: 10%;
+  width: 15%;
   height: 40px;
 }
-.edit{
-  width: 5%;
-  height: 25px;
-}
-ul{
-  padding: 1em;
+
+#task-list{
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  padding: 0px;
 }
 li{
   list-style: none;
+  width: 90%;
+  height: auto;
+  margin: 5px;
+  border: 2px solid #cacece;
+  border-radius: 2px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  word-break: break-all;
 }
-input[type="checkbox"]{
+li input[type="checkbox"]{
   -webkit-appearance: none;
   width: 1.5em;
   height: 1.5em;
@@ -49,7 +72,29 @@ input[type="checkbox"]{
   background-color: #fff;
   border: 2px solid #cacece;
 }
-input[type="checkbox"]:checked{
+li input[type="checkbox"]:checked{
   background-color: #1a73e8;
   color: #fff;
+}
+li span{
+  vertical-align: top;
+}
+.edit{
+  width: 15%;
+  height: 25px;
+  margin-left: auto
+}
+@media (min-width: 768px){
+  li{
+    width: 33%;
+  }
+  header a{
+    width: 15%;
+  }
+  .add{
+    margin-left: 2em;
+  }
+  .edit{
+    width: 20%;
+  }
 }

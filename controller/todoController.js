@@ -1,4 +1,13 @@
 const con = require('./dbConnection.js')
+/* color = purple,pink,yellow,blue,light-green */
+const COLORS = [
+  '#d7aefb',
+  '#fdcfe8',
+  '#fff475',
+  '#a7ffeb',
+  '#aecbfa',
+  '#ccff90'
+]
 
 exports.getList = (req, res) => {
   var user_id = req.session.userId
@@ -6,7 +15,7 @@ exports.getList = (req, res) => {
   console.log('User Name', req.session.username)
 
   var sql =
-    'SELECT users.username, todoList.id, todoList.text, todoList.complete FROM users INNER JOIN todoList WHERE users.id = todoList.user_id AND users.id = "' +
+    'SELECT users.username, todoList.id, todoList.text, todoList.complete, todoList.color FROM users INNER JOIN todoList WHERE users.id = todoList.user_id AND users.id = "' +
     user_id +
     '"'
   con.query(sql, (err, result) => {
@@ -28,15 +37,18 @@ exports.getList = (req, res) => {
 }
 
 exports.addTask = (req, res) => {
+  console.log('REQUEST', req.body)
   var newTask = {
-    text: req.body.task,
+    text: req.body.text,
     user_id: req.session.userId,
-    created_date: new Date()
+    created_date: new Date(),
+    color: COLORS[Math.floor(Math.random() * COLORS.length)]
   }
   var sql = 'INSERT INTO todoList SET ?'
   con.query(sql, newTask, (err, result) => {
     if (err) {
       throw err
+      res.send(500).send('Something broke!')
     } else {
       res.redirect('/todos')
     }

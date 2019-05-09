@@ -3,26 +3,33 @@ $(document).ready(() => {
     var task = $(evt.target)
       .siblings('input')
       .val()
-    console.log('New task', task)
-    // add task to database
-    $.ajax({
-      type: 'POST',
-      url: '/todos/done',
-      data: {
-        text: task
-      },
-      success: function (resp) {
-        console.log('Task Completed')
-      },
-      error: function (err) {
-        console.log('Error!')
-      }
-    })
+    if (task === '') {
+      alert('Task cannot be empty')
+    } else {
+      console.log('New task', task)
+      // add task to database
+      $.ajax({
+        type: 'POST',
+        url: '/todos/add',
+        data: {
+          text: task
+        },
+        success: function (resp) {
+          console.log('Task Completed')
+        },
+        error: function (err) {
+          console.log('Error!')
+        }
+      })
+    }
   })
   $('.checkbox').on('click', evt => {
     var taskId = $(evt.target)
       .parent()
       .attr('id')
+    var span = $(evt.target).siblings('span')
+    var isChecked = $(evt.target).is(':checked') ? 1 : 0
+    //
     console.log('TASK ID ', taskId)
     // mark/unmark the task as complete in satabase
     $.ajax({
@@ -30,10 +37,13 @@ $(document).ready(() => {
       url: '/todos/done',
       data: {
         id: taskId,
-        complete: $(evt.target).is(':checked') ? 1 : 0
+        complete: isChecked
       },
       success: function (resp) {
         console.log('Task Completed')
+        isChecked
+          ? $(span).css('text-decoration', 'line-through')
+          : $(span).css('text-decoration', 'none')
       },
       error: function (err) {
         console.log('Error!')
@@ -53,10 +63,9 @@ $(document).ready(() => {
       $(evt.target).before(input)
       $(evt.target).text('Modify')
     } else {
-      var input = $(evt.target).siblings('input[type=text]')
+      input = $(evt.target).siblings('input[type=text]')
       // send ajax request
-      var p,
-        text = $(input).val()
+      var text = $(input).val()
       $.ajax({
         type: 'POST',
         url: '/todos/modify',

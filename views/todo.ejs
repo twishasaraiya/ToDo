@@ -15,24 +15,21 @@
   </head>
   <body>
     <header>
-    <img src="/images/logo.png" alt="quantiphi logo">
     <h3>Hello, <%= username %></h3>
-    <a href="/logout"><button type="button" class="logout">Logout</button></a>
+    <a href="/logout"><button type="button" class="logout blue">Logout</button></a>
   </header>
-    <form class=""
-          action="//localhost:3001/todos/add"
-          method="post">
+    <div>
           <input type="text" name="task" value="" placeholder = "Enter new task">
-          <button type="submit" class="add">Add</button>
-    </form>
+          <button type="submit" class="add green">Add</button>
+    </div>
 
     <ul id="task-list">
       <% if (typeof todos === "object") { %>
           <% for(i in todos) { %>
-              <li id="<%= todos[i].id %>">
+              <li style="background-color:<%= todos[i].color %>" id="<%= todos[i].id %>">
                 <input class="checkbox" type="checkbox">
                 <span><%= todos[i].text %></span>
-                <button type="button" class="edit">Edit</button>
+                <button type="button" class="edit green">Edit</button>
               </li>
           <% } %>
       <% } else { %>
