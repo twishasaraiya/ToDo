@@ -28,6 +28,7 @@ $(document).ready(() => {
       .parent()
       .attr('id')
     var span = $(evt.target).siblings('span')
+    var editBtn = $(evt.target).siblings('button')
     var isChecked = $(evt.target).is(':checked') ? 1 : 0
     //
     console.log('TASK ID ', taskId)
@@ -41,9 +42,13 @@ $(document).ready(() => {
       },
       success: function (resp) {
         console.log('Task Completed')
-        isChecked
-          ? $(span).css('text-decoration', 'line-through')
-          : $(span).css('text-decoration', 'none')
+        if (isChecked) {
+          $(span).css('text-decoration', 'line-through')
+          $(editBtn).attr('disabled', 'true')
+        } else {
+          $(span).css('text-decoration', 'none')
+          $(editBtn).attr('disabled', 'false')
+        }
       },
       error: function (err) {
         console.log('Error!')
