@@ -1,12 +1,11 @@
 $(document).ready(() => {
   $('.add').on('click', evt => {
-    var task = $(evt.target)
-      .siblings('input')
-      .val()
+    var input = $(evt.target).siblings('input')
+    var task = input.val()
     if (task === '') {
       alert('Task cannot be empty')
     } else {
-      console.log('New task', task)
+      // console.log('New task', task)
       // add task to database
       $.ajax({
         type: 'POST',
@@ -15,10 +14,13 @@ $(document).ready(() => {
           text: task
         },
         success: function (resp) {
-          console.log('Task Completed')
+          // console.log('Task Completed', resp.taskId)
+          $(input).val('')
+          appendNewTask(resp.taskId)
         },
         error: function (err) {
-          console.log('Error!')
+          console.log('Error!', err)
+          alert('Failed to add new task')
         }
       })
     }
@@ -30,8 +32,7 @@ $(document).ready(() => {
     var span = $(evt.target).siblings('span')
     var editBtn = $(evt.target).siblings('button')
     var isChecked = $(evt.target).is(':checked') ? 1 : 0
-    //
-    console.log('TASK ID ', taskId)
+    // console.log('TASK ID ', taskId)
     // mark/unmark the task as complete in satabase
     $.ajax({
       type: 'POST',
@@ -41,13 +42,13 @@ $(document).ready(() => {
         complete: isChecked
       },
       success: function (resp) {
-        console.log('Task Completed')
+        // console.log('Task Completed')
         if (isChecked) {
           $(span).css('text-decoration', 'line-through')
           $(editBtn).attr('disabled', 'true')
         } else {
           $(span).css('text-decoration', 'none')
-          $(editBtn).attr('disabled', 'false')
+          $(editBtn).removeAttr('disabled')
         }
       },
       error: function (err) {
@@ -79,16 +80,42 @@ $(document).ready(() => {
           text: text
         },
         success: function (resp) {
-          console.log($(input).val())
+          // console.log($(input).val())
           span = $('<span>' + text + '</span>')
           input.remove()
           $(evt.target).before(span)
           $(evt.target).text('Edit')
         },
-        error: function (err) {
+        error: function () {
           alert('Could not update the task. Try Again!')
         }
       })
     }
   })
 })
+
+function appendNewTask (taskId) {
+  // get updated todo tasks
+
+  // append the new task
+  $.ajax({
+    type: 'GET',
+    url: '/todos/' + taskId,
+    dataType: 'json',
+    success: function (resp) {
+      // console.log('NEW TASK', resp.task)
+      $('#task-list').append(
+        '<li style="background-color:' +
+          resp.task.color +
+          '" id="' +
+          resp.task.id +
+          '"><input class="checkbox" type="checkbox"><span>' +
+          resp.task.text +
+          '</span><button type="button" class="edit green">Edit</button></li>'
+      )
+    },
+    error: function () {
+      alert('Failed to get tasks list')
+    }
+  })
+}
