@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $('button').on('click', evt => {
-    console.log(evt)
+    // console.log(evt)
     var buttonName = $(evt.target).attr('name')
     console.log('Button => ', buttonName)
 
@@ -13,16 +13,17 @@ $(document).ready(() => {
       $.ajax({
         url: '/' + buttonName,
         type: 'POST',
+        dataType: 'json',
         data: {
           username: username,
           email: email
         },
         success: function (resp) {
-          console.log(resp.message)
+          console.log(resp.message, resp.redirect)
           window.location.replace(resp.redirect)
         },
         error: function (err) {
-          if (err.status == 400) alert('Username or email is invalid')
+          if (err.status == 400) alert(err.responseText)
           console.log('Failed', err)
         }
       })

@@ -13,8 +13,8 @@ exports.signup = (req, res) => {
   var sql = 'INSERT INTO users SET ?'
   con.query(sql, newUser, (err, result) => {
     if (err) {
-      throw err
-      res.send('Error Occured')
+      console.error('[SIGNUP ERROR]', err)
+      res.status(400).send('Error Occured')
     } else {
       console.log('NEW USER INSERTED ', result.insertId)
       req.session.userId = result.insertId
@@ -35,10 +35,10 @@ exports.login = (req, res) => {
     '" AND email = "' +
     req.body.email +
     '"'
-  console.log('LOGIN SQL', sql)
+  // console.log('LOGIN SQL', sql)
   con.query(sql, (err, result) => {
-    if (result.length > 0) {
-      console.log('Logged in successfully', result[0])
+    if (result.length === 1) {
+      console.info('Logged in successfully', result[0])
       req.session.userId = result[0].id
       req.session.username = result[0].username
       res.send({
@@ -46,8 +46,8 @@ exports.login = (req, res) => {
         redirect: 'http://localhost:3001/todos'
       })
     } else {
-      throw err
-      res.status(400).send('Email does not match')
+      console.error(err)
+      res.status(400).send('Email or Username does not match')
     }
   })
 }
