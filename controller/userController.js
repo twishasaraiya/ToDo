@@ -29,24 +29,25 @@ exports.signup = (req, res) => {
 
 exports.login = (req, res) => {
   console.log('REQUEST', req.body)
-  var sql = 'SELECT * FROM users WHERE email = "' + req.body.email + '"'
+  var sql =
+    'SELECT * FROM users WHERE username ="' +
+    req.body.username +
+    '" AND email = "' +
+    req.body.email +
+    '"'
+  console.log('LOGIN SQL', sql)
   con.query(sql, (err, result) => {
-    if (err) {
-      throw err
-      res.send('Error Occurred')
+    if (result.length > 0) {
+      console.log('Logged in successfully', result[0])
+      req.session.userId = result[0].id
+      req.session.username = result[0].username
+      res.send({
+        message: 'Successfully loggged in',
+        redirect: 'http://localhost:3001/todos'
+      })
     } else {
-      if (result.length > 0) {
-        console.log('Logged in successfully', result[0])
-        req.session.userId = result[0].id
-        req.session.username = result[0].username
-        res.send({
-          message: 'Successfully loggged in',
-          redirect: 'http://localhost:3001/todos'
-        })
-      } else {
-        throw err
-        res.send('Email does not match')
-      }
+      throw err
+      res.status(400).send('Email does not match')
     }
   })
 }

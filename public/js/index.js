@@ -22,7 +22,8 @@ $(document).ready(() => {
           window.location.replace(resp.redirect)
         },
         error: function (err) {
-          console.log('Failed')
+          if (err.status == 400) alert('Username or email is invalid')
+          console.log('Failed', err)
         }
       })
     } else {
