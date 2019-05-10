@@ -38,6 +38,7 @@ router.get('/logout', (req, res) => {
  ** Todo Task
  **/
 router.get('/todos', todoController.getList)
+router.get('/todos/:id', todoController.getTask)
 router.post('/todos/add', todoController.addTask)
 router.post('/todos/done', todoController.done)
 router.post('/todos/modify', todoController.modify)
