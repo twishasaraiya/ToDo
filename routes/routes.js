@@ -42,6 +42,7 @@ router.get('/todos/:id', todoController.getTask)
 router.post('/todos/add', todoController.addTask)
 router.post('/todos/done', todoController.done)
 router.post('/todos/modify', todoController.modify)
+router.post('/todos/delete', todoController.delete)
 
 router.get('*', (req, res) => {
   res.render('404')

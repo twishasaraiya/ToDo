@@ -1,4 +1,7 @@
 $(document).ready(() => {
+  /**
+   ***  ADD NEW TASK
+   **/
   $('.add').on('click', evt => {
     var input = $(evt.target).siblings('input')
     var task = input.val()
@@ -25,6 +28,9 @@ $(document).ready(() => {
       })
     }
   })
+  /**
+   ***  MARK TASK AS COMPLETED
+   **/
   $('.checkbox').on('click', evt => {
     var taskId = $(evt.target)
       .parent()
@@ -56,7 +62,9 @@ $(document).ready(() => {
       }
     })
   })
-
+  /**
+   ***  EDIT A TASK
+   **/
   $('.edit').on('click', evt => {
     var taskId = $(evt.target)
       .parent()
@@ -91,6 +99,31 @@ $(document).ready(() => {
         }
       })
     }
+  })
+
+  /**
+   ***  DELETE TASK
+   **/
+  $('.delete').on('click', evt => {
+    var li = $(evt.target).parent()
+    var taskId = li.attr('id')
+    console.log('task id', taskId)
+    // add task to database
+    $.ajax({
+      type: 'POST',
+      url: '/todos/delete',
+      data: {
+        id: taskId
+      },
+      success: function (resp) {
+        console.log('Task deleted', resp)
+        $(li).remove()
+      },
+      error: function (err) {
+        console.log('Error!', err)
+        alert('Failed to add new task')
+      }
+    })
   })
 })
 

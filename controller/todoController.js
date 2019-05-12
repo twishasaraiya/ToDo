@@ -92,3 +92,13 @@ exports.modify = (req, res) => {
     res.send('MODIFY COMPLETED!')
   })
 }
+
+exports.delete = (req, res) => {
+  var sql = 'DELETE FROM todoList WHERE id = "' + req.body.id + '"'
+  console.log('[DELETE SQL]', sql)
+  con.query(sql, (err, result) => {
+    if (err) throw err
+    console.info('DELETE COMPLETED')
+    res.send(result)
+  })
+}

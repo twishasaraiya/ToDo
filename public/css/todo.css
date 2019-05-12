@@ -81,7 +81,7 @@ li input[type="checkbox"]:checked{
 li span{
   vertical-align: top;
 }
-.edit{
+.edit, .delete{
   width: 15%;
   height: 25px;
   margin-left: auto
