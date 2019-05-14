@@ -36,7 +36,7 @@ $(document).ready(() => {
       .parent()
       .attr('id')
     var span = $(evt.target).siblings('span')
-    var editBtn = $(evt.target).siblings('button')
+    var buttons = $(evt.target).siblings('button')
     var isChecked = $(evt.target).is(':checked') ? 1 : 0
     // console.log('TASK ID ', taskId)
     // mark/unmark the task as complete in satabase
@@ -51,10 +51,10 @@ $(document).ready(() => {
         // console.log('Task Completed')
         if (isChecked) {
           $(span).css('text-decoration', 'line-through')
-          $(editBtn).attr('disabled', 'true')
+          $(buttons).attr('disabled', 'true')
         } else {
           $(span).css('text-decoration', 'none')
-          $(editBtn).removeAttr('disabled')
+          $(buttons).removeAttr('disabled')
         }
       },
       error: function (err) {
@@ -107,7 +107,7 @@ $(document).ready(() => {
   $('.delete').on('click', evt => {
     var li = $(evt.target).parent()
     var taskId = li.attr('id')
-    console.log('task id', taskId)
+    // console.log('task id', taskId)
     // add task to database
     $.ajax({
       type: 'POST',
@@ -144,7 +144,7 @@ function appendNewTask (taskId) {
           resp.task.id +
           '"><input class="checkbox" type="checkbox"><span>' +
           resp.task.text +
-          '</span><button type="button" class="edit green">Edit</button></li>'
+          '</span><button type="button" class="edit green">Edit</button></span><button type="button" class="delete blue">Edit</button></li>'
       )
     },
     error: function () {
