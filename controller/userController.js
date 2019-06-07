@@ -5,7 +5,7 @@ exports.signup = (req, res) => {
   var today = new Date()
   var newUser = {
     username: req.body.username,
-    email: req.body.email,
+    password: req.body.password,
     created_date: today
   }
   console.log('NEW USER', newUser)
@@ -32,8 +32,8 @@ exports.login = (req, res) => {
   var sql =
     'SELECT * FROM users WHERE username ="' +
     req.body.username +
-    '" AND email = "' +
-    req.body.email +
+    '" AND password = "' +
+    req.body.password +
     '"'
   // console.log('LOGIN SQL', sql)
   con.query(sql, (err, result) => {
@@ -47,7 +47,7 @@ exports.login = (req, res) => {
       })
     } else {
       console.error(err)
-      res.status(400).send('Email or Username does not match')
+      res.status(400).send('Password or Username does not match')
     }
   })
 }

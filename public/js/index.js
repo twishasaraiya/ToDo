@@ -5,10 +5,10 @@ $(document).ready(() => {
     console.log('Button => ', buttonName)
 
     var username = $('#username').val()
-    var email = $('#email').val()
-    console.log(username, email)
+    var pwd = $('#password').val()
+    console.log(username, pwd)
 
-    if (username !== '' && email !== '') {
+    if (username !== '' && pwd !== '') {
       // send request
       $.ajax({
         url: '/' + buttonName,
@@ -16,11 +16,15 @@ $(document).ready(() => {
         dataType: 'json',
         data: {
           username: username,
-          email: email
+          password: pwd
         },
         success: function (resp) {
           console.log(resp.message, resp.redirect)
-          window.location.replace(resp.redirect)
+          try {
+            window.location.href = resp.redirect
+          } catch (err) {
+            console.log('error in redirecting ', err)
+          }
         },
         error: function (err) {
           if (err.status == 400) alert(err.responseText)

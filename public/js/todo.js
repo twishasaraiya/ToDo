@@ -144,7 +144,7 @@ function appendNewTask (taskId) {
           resp.task.id +
           '"><input class="checkbox" type="checkbox"><span>' +
           resp.task.text +
-          '</span><button type="button" class="edit green">Edit</button></span><button type="button" class="delete blue">Edit</button></li>'
+          '</span><button type="button" class="edit green">Edit</button></span><button type="button" class="delete blue">Delete</button></li>'
       )
     },
     error: function () {

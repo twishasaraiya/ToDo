@@ -21,6 +21,7 @@
     </div>
 
     <ul id="task-list">
+      <% if (todos.length > 0) { %>
           <% for(i in todos) { %>
               <li style="background-color:<%= todos[i].color %>" id="<%= todos[i].id %>">
                 <input class="checkbox" type="checkbox">
@@ -28,6 +29,7 @@
                 <button type="button" class="edit green">Edit</button>
                 <button type="button" class="delete blue">Delete</button>
               </li>
+          <% } %>
           <% } %>
     </ul>
   </body>

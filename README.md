@@ -28,7 +28,7 @@ Create a user-wise TODO list, where a user can login, add/modify/mark as complet
 6. Start the app using the command
 `npm start`
 7. Once the server is running visit `http://localhost:3001`
-8. As new user signup by providing Username and Email
+8. As new user signup by providing Username and Password
 9. Once signed up you can add/edit/complete/delete task and then Logout
 10. Next time you can login again and view your tasks
 

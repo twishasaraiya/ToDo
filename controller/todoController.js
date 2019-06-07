@@ -10,20 +10,24 @@ const COLORS = [
 ]
 
 exports.getList = (req, res) => {
+  console.log('get list of tasks')
   var user_id = req.session.userId
+
+  if (typeof user_id === 'undefined') {
+    res.status(400).send('Please login/signup')
+  }
   var sql =
     'SELECT users.username, todoList.id, todoList.text, todoList.complete, todoList.color FROM users INNER JOIN todoList WHERE users.id = todoList.user_id AND users.id = "' +
     user_id +
     '"'
+  console.log('query', sql)
   con.query(sql, (err, result) => {
     if (err) {
       console.error('[GET LIST]', err)
       res.send('Error Occured')
     } else {
-      if (result.length > 0) {
-        // console.log('TODO LIST', result)
-        res.render('todo', { username: req.session.username, todos: result })
-      }
+      console.log('TODO LIST', result)
+      res.render('todo', { username: req.session.username, todos: result })
     }
   })
 }
